@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TicTacToeOnline.Application.Services.Authentication;
 
 namespace TicTacToeOnline.Application
 {
@@ -12,7 +7,7 @@ namespace TicTacToeOnline.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection service)
         {
-            service.AddScoped<IAuthenticationServices, AuthenticationServices>();
+            service.AddMediatR(typeof(DependencyInjection).Assembly);
 
             return service;
         }
