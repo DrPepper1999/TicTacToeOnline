@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mapster;
+﻿using Mapster;
 using TicTacToeOnline.Application.Authentication.Commands.Register;
 using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Authentication.Queries.Login;
