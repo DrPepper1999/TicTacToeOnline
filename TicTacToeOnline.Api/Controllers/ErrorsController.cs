@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TicTacToeOnline.Api.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorsController : ControllerBase
     {
         [Route("error")]
         public IActionResult Error()
         {
+            Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+
             return Problem();
         }
     }

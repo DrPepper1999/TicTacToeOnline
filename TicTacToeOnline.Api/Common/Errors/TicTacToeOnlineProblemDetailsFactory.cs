@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
+using TicTacToeOnline.Api.Common.Http;
 
-namespace TicTacToeOnline.Api.Errors
+namespace TicTacToeOnline.Api.Common.Errors
 {
     public class TicTacToeOnlineProblemDetailsFactory : ProblemDetailsFactory
     {
@@ -95,7 +92,11 @@ namespace TicTacToeOnline.Api.Errors
                 problemDetails.Extensions["traceId"] = traceId;
             }
 
-            problemDetails.Extensions.Add("customProperty", "customValue");
+            if (httpContext?.Items[HttpContextItemKeys.Errors] is List<Error> errors)
+            {
+                problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code)); 
+            }
+
         }
     }
 }
