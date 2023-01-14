@@ -1,47 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TicTacToeOnline.Application.Services.Authentication;
+﻿using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TicTacToeOnline.Application.Authentication.Commands.Register;
+using TicTacToeOnline.Application.Authentication.Common;
+using TicTacToeOnline.Application.Authentication.Queries.Login;
 using TicTacToeOnline.Contracts.Authentication;
+using TicTacToeOnline.Domain.Common.Errors;
 
 namespace TicTacToeOnline.Api.Controllers
 {
     [Route("auth")]
-    [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : ApiController
     {
-        private readonly IAuthenticationServices _authenticationServices;
-        public AuthenticationController(IAuthenticationServices authenticationServices)
+        private readonly ISender _mediator;
+        private readonly IMapper _mapper;
+        public AuthenticationController(ISender mediator, IMapper mapper)
         {
-            _authenticationServices = authenticationServices;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            var authResult = _authenticationServices
-                .Register(request.Email, request.Password, request.Name);
+            var command = _mapper.Map<RegisterCommand>(request);
+            var authResult = await _mediator.Send(command);
 
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.Email,
-                authResult.User.Name,
-                authResult.Token);
 
-            return Ok(response);
+           return authResult.Match(
+                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+                Problem);
         }
 
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var authResult = _authenticationServices
-                .Login(request.Email, request.Password);
+            var query = _mapper.Map<LoginQuery>(request);
+            var authResult = await _mediator.Send(query);
 
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.Email,
-                authResult.User.Name,
-                authResult.Token);
+            if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+            {
+                return Problem(
+                    statusCode: StatusCodes.Status401Unauthorized,
+                    title: authResult.FirstError.Description);
+            }
 
-            return Ok(response);
+            return authResult.Match(
+                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+                Problem 
+            );
         }
     }
 }

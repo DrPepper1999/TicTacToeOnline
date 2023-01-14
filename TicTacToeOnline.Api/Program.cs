@@ -1,20 +1,13 @@
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using TicTacToeOnline.Api.Errors;
+using TicTacToeOnline.Api;
 using TicTacToeOnline.Application;
 using TicTacToeOnline.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
+        .AddPresentation()
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
-
-    builder.Services.AddControllers();
-
-    builder.Services.AddSingleton<ProblemDetailsFactory, TicTacToeOnlineProblemDetailsFactory>();
-
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
 }
 
 var app = builder.Build();
