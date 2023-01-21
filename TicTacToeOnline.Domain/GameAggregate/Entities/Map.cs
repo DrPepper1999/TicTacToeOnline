@@ -25,6 +25,12 @@ namespace TicTacToeOnline.Domain.GameAggregate.Entities
             return new Map(MapId.CreateUnique(), size);
         }
 
+        #pragma warning disable CS8618
+        private Map()
+        {
+        }
+        #pragma warning disable CS8618
+
         public Mark this[int x, int y]
         {
             get => _fields[x, y];

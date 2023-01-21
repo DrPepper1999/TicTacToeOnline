@@ -4,9 +4,9 @@ namespace TicTacToeOnline.Domain.GameAggregate.ValueObjects
 {
     public sealed class GameId : ValueObject
     {
-        private Guid Value { get; }
+        public Guid Value { get; }
 
-        public GameId(Guid value)
+        private GameId(Guid value)
         {
             Value = value;
         }
@@ -14,6 +14,11 @@ namespace TicTacToeOnline.Domain.GameAggregate.ValueObjects
         public static GameId CreateUnique()
         {
             return new(Guid.NewGuid());
+        }
+
+        public static GameId Create(Guid gameId)
+        {
+            return new(gameId);
         }
 
         public override IEnumerable<object> GetEqualityComponents()

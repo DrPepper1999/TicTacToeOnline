@@ -4,9 +4,9 @@ namespace TicTacToeOnline.Domain.RoomAggregate.ValueObjects
 {
     public sealed class RoomId : ValueObject
     {
-        private Guid Value { get; }
+        public Guid Value { get; }
 
-        public RoomId(Guid value)
+        private RoomId(Guid value)
         {
             Value = value;
         }
@@ -14,6 +14,11 @@ namespace TicTacToeOnline.Domain.RoomAggregate.ValueObjects
         public static RoomId CreateUnique()
         {
             return new(Guid.NewGuid());
+        }
+
+        public static RoomId Create(Guid roomId)
+        {
+            return new(roomId);
         }
 
         public override IEnumerable<object> GetEqualityComponents()

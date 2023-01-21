@@ -7,9 +7,6 @@ namespace TicTacToeOnline.Domain.GameAggregate
 {
     public class Game : AggregateRoot<GameId>
     {
-        private readonly List<PlayerId> _playerIds = new();
-
-        public IReadOnlyList<PlayerId> PlayersIds => _playerIds.AsReadOnly(); // _playerIds.ToList().AsReadOnly();
         public PlayerId PlayerTurn { get; private set; }
         public Map Map { get; private set; }
 
@@ -22,10 +19,16 @@ namespace TicTacToeOnline.Domain.GameAggregate
             PlayerTurn = PlayerId.Create(Guid.Empty);
         }
 
-        public static Game Create(int sizeMap = 3)
+        public static Game Create(int mapSize = 3)
         {
-            return new Game(GameId.CreateUnique(), sizeMap);
+            return new Game(GameId.CreateUnique(), mapSize);
         }
+
+        #pragma warning disable CS8618
+        private Game()
+        {
+        }
+        #pragma warning disable CS8618
 
         public void SetPlayerTurn(Guid playerId)
         {

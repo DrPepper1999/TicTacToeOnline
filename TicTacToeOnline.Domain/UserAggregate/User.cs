@@ -6,9 +6,9 @@ namespace TicTacToeOnline.Domain.UserAggregate
 {
     public class User : AggregateRoot<UserId>
     {
+        public string Name { get; private set; } = null!;
         public string Email { get; private set; } = null!;
         public string Password { get; private set; } = null!;
-        public string Name { get; private set; } = null!;
 
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdateDateTime { get; private set; }
@@ -20,5 +20,16 @@ namespace TicTacToeOnline.Domain.UserAggregate
             Password = password;
             Name = name;
         }
+
+        public static User Create(string name, string email, string password)
+        {
+            return new User(name, email, password);
+        }
+
+#pragma warning disable CS8618
+        private User()
+        {
+        }
+#pragma warning disable CS8618
     }
 }

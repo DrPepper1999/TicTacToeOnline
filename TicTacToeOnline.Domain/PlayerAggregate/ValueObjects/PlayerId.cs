@@ -4,9 +4,9 @@ namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
 {
     public sealed class PlayerId : ValueObject
     {
-        private Guid Value { get; }
+        public Guid Value { get; }
 
-        public PlayerId(Guid value)
+        private PlayerId(Guid value)
         {
             Value = value;
         }
