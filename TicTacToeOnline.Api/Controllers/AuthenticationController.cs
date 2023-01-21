@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TicTacToeOnline.Application.Authentication.Commands.Register;
 using TicTacToeOnline.Application.Authentication.Common;
@@ -10,6 +11,7 @@ using TicTacToeOnline.Domain.Common.Errors;
 namespace TicTacToeOnline.Api.Controllers
 {
     [Route("auth")]
+    [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
         private readonly ISender _mediator;
@@ -26,7 +28,7 @@ namespace TicTacToeOnline.Api.Controllers
             var command = _mapper.Map<RegisterCommand>(request);
             var authResult = await _mediator.Send(command);
 
-
+            var test = _mapper.Map<AuthenticationResponse>(authResult);
            return authResult.Match(
                 authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
                 Problem);
