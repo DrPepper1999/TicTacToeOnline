@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeOnline.Domain", "TicTacToeOnline.Domain\TicTacToeOnline.Domain.csproj", "{1811E9E3-2D0E-4C85-B27A-03BD022349FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeOnline.Domain", "TicTacToeOnline.Domain\TicTacToeOnline.Domain.csproj", "{1811E9E3-2D0E-4C85-B27A-03BD022349FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeOnline.Application", "TicTacToeOnline.Application\TicTacToeOnline.Application.csproj", "{909B4220-2D1C-400A-B3A2-F23F352FAA34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeOnline.Application", "TicTacToeOnline.Application\TicTacToeOnline.Application.csproj", "{909B4220-2D1C-400A-B3A2-F23F352FAA34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeOnline.Contracts", "TicTacToeOnline.Contracts\TicTacToeOnline.Contracts.csproj", "{F1BEAF80-D718-490B-A7A6-519AA5FD04B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeOnline.Contracts", "TicTacToeOnline.Contracts\TicTacToeOnline.Contracts.csproj", "{F1BEAF80-D718-490B-A7A6-519AA5FD04B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeOnline.Api", "TicTacToeOnline.Api\TicTacToeOnline.Api.csproj", "{C8F40F8F-D810-4B11-B49B-4CF89FF6687A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeOnline.Api", "TicTacToeOnline.Api\TicTacToeOnline.Api.csproj", "{C8F40F8F-D810-4B11-B49B-4CF89FF6687A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeOnline.Infrastructure", "TicTacToeOnline.Infrastructure\TicTacToeOnline.Infrastructure.csproj", "{E46512DB-C48B-4980-AD0D-9EF5EC8BA8AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeOnline.Infrastructure", "TicTacToeOnline.Infrastructure\TicTacToeOnline.Infrastructure.csproj", "{E46512DB-C48B-4980-AD0D-9EF5EC8BA8AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
