@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicTacToeOnline.Domain.Entities;
+﻿using TicTacToeOnline.Domain.UserAggregate;
 
 namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
 {
