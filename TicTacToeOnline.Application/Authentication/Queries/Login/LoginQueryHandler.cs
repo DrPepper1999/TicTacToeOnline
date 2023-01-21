@@ -4,7 +4,7 @@ using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.Common.Errors;
-using TicTacToeOnline.Domain.Entities;
+using TicTacToeOnline.Domain.UserAggregate;
 
 namespace TicTacToeOnline.Application.Authentication.Queries.Login
 {

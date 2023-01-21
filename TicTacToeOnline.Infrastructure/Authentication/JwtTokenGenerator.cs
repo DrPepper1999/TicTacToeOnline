@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Services;
-using TicTacToeOnline.Domain.Entities;
+using TicTacToeOnline.Domain.UserAggregate;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace TicTacToeOnline.Infrastructure.Authentication
@@ -30,7 +30,7 @@ namespace TicTacToeOnline.Infrastructure.Authentication
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()!),
                 new Claim(JwtRegisteredClaimNames.Name, user.Name),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

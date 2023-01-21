@@ -4,7 +4,7 @@ using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.Common.Errors;
-using TicTacToeOnline.Domain.Entities;
+using TicTacToeOnline.Domain.UserAggregate;
 
 namespace TicTacToeOnline.Application.Authentication.Commands.Register
 {
@@ -28,7 +28,7 @@ namespace TicTacToeOnline.Application.Authentication.Commands.Register
                 return Errors.User.DuplicateEmail;
             }
 
-            var user = new User { Email = command.Email, Password = command.Password, Name = command.Name };
+            var user = User.Create(command.Name, command.Email, command.Password);
 
             _userRepository.Add(user);
 
