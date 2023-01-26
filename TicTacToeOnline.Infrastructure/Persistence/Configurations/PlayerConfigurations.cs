@@ -39,9 +39,11 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.UserId)
                 .HasConversion(
-                    id => id.Value,
+                    id => id,
                     value => UserId.Create(value));
         }
+
+        private Guid? Convert(UserId? userId) => userId?.Value ?? null;
 
         private void ConfigureConnectionInfoTable(EntityTypeBuilder<Player> builder)
         {

@@ -11,6 +11,7 @@ namespace TicTacToeOnline.Contracts.Room
         string? Password,
         int? PlayersForStart,
         string PlayerName,
-        string PlayerMark
+        string PlayerMark,
+        string PlayerConnectionId
     );
 }

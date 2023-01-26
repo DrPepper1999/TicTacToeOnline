@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TicTacToeOnline.Application.Players.Commands.CreatePlayer;
 using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
@@ -36,9 +37,18 @@ namespace TicTacToeOnline.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomRequest request)
         {
-            var command = _mapper.Map<CreateRoomCommand>(request);
+            var createPlayerCommand = _mapper.Map<CreatePlayerCommand>(request);
 
-            var createRoomResult = await _mediator.Send(command);
+            var createPlayerResult = await _mediator.Send(createPlayerCommand);
+
+            if (createPlayerResult.IsError)
+            {
+                return Problem(createPlayerResult.Errors);
+            }
+
+            var createRoomCommand = _mapper.Map<CreateRoomCommand>((request, createPlayerResult.Value.Id));
+
+            var createRoomResult = await _mediator.Send(createRoomCommand);
 
             return createRoomResult.Match(
                 room => Ok(_mapper.Map<RoomResponse>(room)), // CreatedAtAction(nameof(GetRoom), new {roomId = room.Id}, room)

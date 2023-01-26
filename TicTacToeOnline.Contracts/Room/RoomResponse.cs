@@ -20,7 +20,7 @@ namespace TicTacToeOnline.Contracts.Room
         string Id,
         string PlayerTurn,
         MapResponse Map,
-        List<Guid> PlayerIds,
+        List<string> PlayerIds,
         DateTime CreatedDateTime,
         DateTime UpdateDateTime
         );

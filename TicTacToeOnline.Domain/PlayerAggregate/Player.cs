@@ -15,16 +15,16 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
         public string Name { get; private set; }
         public Mark Mark { get; private set; }
         public AverageRating AverageRating { get; private set; }
-        public UserId UserId { get; private set; }
+        public UserId? UserId { get; private set; }
 
         public IReadOnlyList<ConnectionInfo> Connections => _connections.AsReadOnly();
 
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdateDateTime { get; private set; }
 
-        public Player(
+        private Player(
             PlayerId id,
-            UserId userId,
+            UserId? userId,
             string name,
             Mark mark,
             AverageRating averageRating)
@@ -36,18 +36,10 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             AverageRating = averageRating;
         }
 
-        public static ErrorOr<Player> Create(UserId userId, string name, Mark mark)
+        public static ErrorOr<Player> Create(UserId? userId, string name)
         {
-            if (mark == Mark.Empty) return Errors.Player.MarkCannotBeEmpty;
-
-            return new Player(PlayerId.CreateUnique(), userId, name, mark, AverageRating.CreateNew());
+            return new Player(PlayerId.CreateUnique(), userId, name, Mark.Empty, AverageRating.CreateNew());
         }
-
-        #pragma warning disable CS8618
-        private Player()
-        {
-        }
-        #pragma warning disable CS8618
 
         public Error? SetMark(Mark mark)
         {
@@ -89,5 +81,11 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             _connections.Remove(connection);
 
         }
+
+        #pragma warning disable CS8618
+        private Player()
+        {
+        }
+        #pragma warning disable CS8618
     }
 }
