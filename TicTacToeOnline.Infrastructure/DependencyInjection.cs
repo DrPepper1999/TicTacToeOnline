@@ -32,7 +32,7 @@ namespace TicTacToeOnline.Infrastructure
             ConfigurationManager configuration)
         {
             services.AddDbContext<TicTacToeOnlineDbContext>(option =>
-                option.UseNpgsql());
+                option.UseNpgsql("Host=localhost;Port=5432;Database=TicTacToeOnline;Username=postgres;Password=Lfybbk1999"));
 
                 services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
