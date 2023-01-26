@@ -11,7 +11,25 @@ namespace TicTacToeOnline.Contracts.Room
         string Name,
         string Status,
         int PlayersForStart,
-        string GameId,
+        GameResponse Game,
+        DateTime CreatedDateTime,
+        DateTime UpdateDateTime
+    );
+
+    public record GameResponse(
+        string Id,
+        string PlayerTurn,
+        MapResponse Map,
+        List<Guid> PlayerIds,
+        DateTime CreatedDateTime,
+        DateTime UpdateDateTime
+        );
+
+    public record MapResponse(
+        string Id,
+        string Fields,
+        int Size,
+        bool IsAllCellFilled,
         DateTime CreatedDateTime,
         DateTime UpdateDateTime
     );
