@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.RoomAggregate;
 
 namespace TicTacToeOnline.Infrastructure.Persistence
 {
-    public class TicTacToeOnlineDbContext : DbContext
+    public class TicTacToeOnlineDbContext : DbContext, IUnitOfWork
     {
         public TicTacToeOnlineDbContext(DbContextOptions<TicTacToeOnlineDbContext> options)
             : base(options)

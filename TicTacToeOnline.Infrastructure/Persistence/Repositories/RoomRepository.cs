@@ -14,11 +14,11 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
+        public IUnitOfWork UnitOfWork => _dbContext;
+
         public async Task AddAsync(Room room, CancellationToken cancellationToken = default)
         {
             await _dbContext.AddAsync(room, cancellationToken);
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<Room?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -34,8 +34,6 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             await Task.CompletedTask;
 
             _dbContext.Rooms.Remove(room);
-
-            await _dbContext.SaveChangesAsync();
         }
     }
 }
