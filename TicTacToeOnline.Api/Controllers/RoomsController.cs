@@ -5,6 +5,7 @@ using TicTacToeOnline.Application.Players.Commands.CreatePlayer;
 using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
+using TicTacToeOnline.Contracts.Player;
 using TicTacToeOnline.Contracts.Room;
 
 namespace TicTacToeOnline.Api.Controllers
@@ -37,18 +38,9 @@ namespace TicTacToeOnline.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoomRequest request)
         {
-            var createPlayerCommand = _mapper.Map<CreatePlayerCommand>(request);
+            var command = _mapper.Map<CreateRoomCommand>(request);
 
-            var createPlayerResult = await _mediator.Send(createPlayerCommand);
-
-            if (createPlayerResult.IsError)
-            {
-                return Problem(createPlayerResult.Errors);
-            }
-
-            var createRoomCommand = _mapper.Map<CreateRoomCommand>((request, createPlayerResult.Value.Id));
-
-            var createRoomResult = await _mediator.Send(createRoomCommand);
+            var createRoomResult = await _mediator.Send(command);
 
             return createRoomResult.Match(
                 room => Ok(_mapper.Map<RoomResponse>(room)), // CreatedAtAction(nameof(GetRoom), new {roomId = room.Id}, room)
