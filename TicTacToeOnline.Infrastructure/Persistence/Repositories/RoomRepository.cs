@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.RoomAggregate;
+using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
 {
@@ -17,11 +19,26 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(Room room)
+        public async Task AddAsync(Room room, CancellationToken cancellationToken = default)
         {
-            _dbContext.Add(room);
+            await _dbContext.AddAsync(room, cancellationToken);
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<Room?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var entity = await _dbContext.Rooms
+                .FirstOrDefaultAsync(x => x.Id == RoomId.Create(id), cancellationToken);
+
+            return entity;
+        }
+
+        public async Task DeleteAsync(Room room)
+        {
+            await Task.CompletedTask;
+
+            _dbContext.Rooms.Remove(room);
         }
     }
 }
