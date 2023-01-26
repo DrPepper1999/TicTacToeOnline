@@ -21,7 +21,7 @@ namespace TicTacToeOnline.Application.Rooms.Commands.DeleteRoom
 
         public async Task<ErrorOr<Unit>> Handle(DeleteRoomCommand request, CancellationToken cancellationToken)
         {
-            var room = await _roomRepository.GetByIdAsync(request.id, cancellationToken);
+            var room = await _roomRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (room is null)
             {

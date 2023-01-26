@@ -34,6 +34,8 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             await Task.CompletedTask;
 
             _dbContext.Rooms.Remove(room);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

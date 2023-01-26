@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mapster;
 using TicTacToeOnline.Application.Common.Extensions;
 using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
+using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
 using TicTacToeOnline.Contracts.Room;
 using TicTacToeOnline.Domain.RoomAggregate;
@@ -24,6 +25,10 @@ namespace TicTacToeOnline.Api.Common.Mapping
                 .Map(dest => dest, src => src);
 
             config.NewConfig<(GetRoomRequest request, Guid roomId), GetRoomQuery>()
+                .Map(dest => dest.Id, src => src.roomId)
+                .Map(dest => dest, src => src.request);
+
+            config.NewConfig<(DeleteRoomRequest request, Guid roomId), DeleteRoomCommand>()
                 .Map(dest => dest.Id, src => src.roomId)
                 .Map(dest => dest, src => src.request);
 

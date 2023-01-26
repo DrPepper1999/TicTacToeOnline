@@ -8,5 +8,5 @@ using MediatR;
 
 namespace TicTacToeOnline.Application.Rooms.Commands.DeleteRoom
 {
-    public record DeleteRoomCommand(Guid id) : IRequest<ErrorOr<Unit>>;
+    public record DeleteRoomCommand(Guid Id) : IRequest<ErrorOr<Unit>>;
 }
