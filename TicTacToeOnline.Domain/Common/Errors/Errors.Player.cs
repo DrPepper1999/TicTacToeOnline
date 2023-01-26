@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ErrorOr;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
+using TicTacToeOnline.Domain.RoomAggregate.Enums;
 
 namespace TicTacToeOnline.Domain.Common.Errors
 {

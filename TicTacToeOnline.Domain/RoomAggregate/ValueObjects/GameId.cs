@@ -1,6 +1,6 @@
 ﻿using TicTacToeOnline.Domain.Common.Models;
 
-namespace TicTacToeOnline.Domain.GameAggregate.ValueObjects
+namespace TicTacToeOnline.Domain.RoomAggregate.ValueObjects
 {
     public sealed class GameId : ValueObject
     {

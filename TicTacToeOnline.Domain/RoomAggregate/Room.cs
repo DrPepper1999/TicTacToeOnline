@@ -1,7 +1,5 @@
 ﻿using TicTacToeOnline.Domain.Common.Models;
-using TicTacToeOnline.Domain.GameAggregate;
-using TicTacToeOnline.Domain.GameAggregate.ValueObjects;
-using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
+using TicTacToeOnline.Domain.RoomAggregate.Entities;
 using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
@@ -9,13 +7,10 @@ namespace TicTacToeOnline.Domain.RoomAggregate
 {
     public class Room : AggregateRoot<RoomId>
     {
-        private readonly List<PlayerId> _playerIds = new();
-
         public string Name { get; private set; } = null!;
         public string? Password { get; private set; }
         public RoomStatus Status { get; private set; }
         public int PlayersForStart { get; private set; }
-        public IReadOnlyList<PlayerId> PlayerIds => _playerIds.AsReadOnly(); // _playerIds.ToList().AsReadOnly();
         public Game Game { get; private set; }
 
         public DateTime CreatedDateTime { get; private set; }

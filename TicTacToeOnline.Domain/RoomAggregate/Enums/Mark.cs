@@ -1,4 +1,4 @@
-﻿namespace TicTacToeOnline.Domain.GameAggregate.Enums
+﻿namespace TicTacToeOnline.Domain.RoomAggregate.Enums
 {
     public enum Mark
     {

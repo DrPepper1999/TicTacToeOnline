@@ -1,8 +1,8 @@
 ﻿using TicTacToeOnline.Domain.Common.Models;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
-using TicTacToeOnline.Domain.GameAggregate.ValueObjects;
+using TicTacToeOnline.Domain.RoomAggregate.Enums;
+using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
-namespace TicTacToeOnline.Domain.GameAggregate.Entities
+namespace TicTacToeOnline.Domain.RoomAggregate.Entities
 {
     public class Map : Entity<MapId>
     {
@@ -25,11 +25,11 @@ namespace TicTacToeOnline.Domain.GameAggregate.Entities
             return new Map(MapId.CreateUnique(), size);
         }
 
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
         private Map()
         {
         }
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
 
         public Mark this[int x, int y]
         {
@@ -42,7 +42,7 @@ namespace TicTacToeOnline.Domain.GameAggregate.Entities
                 _fillCellCount++;
             }
         }
-        public Mark[,] GetMap()
+        public Mark[,] GetFields()
         {
             return _fields;
         }

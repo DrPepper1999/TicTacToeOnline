@@ -2,8 +2,8 @@
 using TicTacToeOnline.Domain.Common.Errors;
 using TicTacToeOnline.Domain.Common.Models;
 using TicTacToeOnline.Domain.Common.ValueObjects;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
+using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Domain.PlayerAggregate
