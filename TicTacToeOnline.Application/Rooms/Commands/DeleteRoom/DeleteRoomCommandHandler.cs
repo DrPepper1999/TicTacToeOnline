@@ -30,6 +30,8 @@ namespace TicTacToeOnline.Application.Rooms.Commands.DeleteRoom
 
             await _roomRepository.DeleteAsync(room);
 
+            await _roomRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
             return Unit.Value;
         }
     }

@@ -1,4 +1,7 @@
-﻿using TicTacToeOnline.Domain.Common.Models;
+﻿using ErrorOr;
+using TicTacToeOnline.Domain.Common.Models;
+using TicTacToeOnline.Domain.PlayerAggregate;
+using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate.Entities;
 using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
@@ -28,6 +31,7 @@ namespace TicTacToeOnline.Domain.RoomAggregate
 
         public static Room Create(
             string name,
+            PlayerId playerId,
             int? playerForStart = null,
             string? password = null,
             int mapSize = 3)
@@ -37,7 +41,7 @@ namespace TicTacToeOnline.Domain.RoomAggregate
                 name,
                 password,
                 playerForStart ?? 2,
-                Game.Create(mapSize));
+                Game.Create(playerId, mapSize));
         }
 
         #pragma warning disable CS8618
