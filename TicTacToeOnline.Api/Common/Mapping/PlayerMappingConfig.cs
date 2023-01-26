@@ -18,7 +18,7 @@ namespace TicTacToeOnline.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<CreatePlayerRequest, CreatePlayerCommand>();
+            config.NewConfig<(CreatePlayerRequest request, Guid userId), CreatePlayerCommand>();
 
             config.NewConfig<Player, PlayerResponse>()
                 .Map(dest => dest.Id, src => src.Id.Value)
@@ -30,6 +30,6 @@ namespace TicTacToeOnline.Api.Common.Mapping
             config.NewConfig<ConnectionInfo, ConnectionInfoResponse>();
         }
 
-        private string? ConvertUserId(UserId? userId) => userId?.Value.ToString();
+        private static string? ConvertUserId(UserId? userId) => userId?.Value.ToString();
     }
 }
