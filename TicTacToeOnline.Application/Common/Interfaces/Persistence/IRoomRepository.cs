@@ -9,6 +9,10 @@ namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
 {
     public interface IRoomRepository
     {
-        void Add(Room room);
+        Task AddAsync(Room room, CancellationToken cancellationToken = default);
+
+        Task<Room?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task DeleteAsync(Room room);
     }
 }
