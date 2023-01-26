@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TicTacToeOnline.Domain.PlayerAggregate;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
+using TicTacToeOnline.Domain.RoomAggregate.Enums;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
 {

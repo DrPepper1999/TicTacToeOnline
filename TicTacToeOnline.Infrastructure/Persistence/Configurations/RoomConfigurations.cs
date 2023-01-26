@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TicTacToeOnline.Domain.GameAggregate.Entities;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
-using TicTacToeOnline.Domain.GameAggregate.ValueObjects;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate;
+using TicTacToeOnline.Domain.RoomAggregate.Entities;
 using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 using TicTacToeOnline.Infrastructure.Persistence.Common.Conversion;
@@ -16,7 +14,6 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Room> builder)
         {
             ConfigureRoomsTable(builder);
-            ConfigurePlayersIdsTable(builder);
             ConfigureGameTable(builder);
         }
 
@@ -89,27 +86,24 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
                     mb.Property("_fields")
                         .HasConversion<MapConverter>();
                 });
+
+                gb.OwnsMany(g => g.PlayerIds, pib =>
+                {
+                    pib.ToTable("PlayerIds");
+
+                    pib.WithOwner().HasForeignKey("GameId", "RoomId");
+
+                    pib.Property<int>("Id");
+                    pib.HasKey("Id");
+
+                    pib.Property(p => p.Value)
+                        .HasColumnName("PlayerIds")
+                        .ValueGeneratedNever();
+                });
+
+                gb.Navigation(g => g.PlayerIds).Metadata.SetField("_playerIds");
+                gb.Navigation(g => g.PlayerIds).UsePropertyAccessMode(PropertyAccessMode.Field);
             });
-        }
-
-        private void ConfigurePlayersIdsTable(EntityTypeBuilder<Room> builder)
-        {
-            builder.OwnsMany(r => r.PlayerIds, pib =>
-            {
-                pib.ToTable("PlayerIds");
-
-                pib.WithOwner().HasForeignKey("RoomId");
-
-                pib.HasKey("Id");
-
-                pib.Property(p => p.Value)
-                    .HasColumnName("PlayerId")
-                    .ValueGeneratedNever();
-            });
-
-
-            builder.Metadata.FindNavigation(nameof(Room.PlayerIds))!
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
