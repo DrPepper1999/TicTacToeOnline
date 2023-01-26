@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TicTacToeOnline.Application.Common.Extensions;
-using TicTacToeOnline.Domain.GameAggregate.Enums;
+using TicTacToeOnline.Domain.RoomAggregate.Enums;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Common.Conversion
 {
