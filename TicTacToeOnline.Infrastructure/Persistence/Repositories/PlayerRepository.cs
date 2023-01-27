@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,11 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(x => x.Id == PlayerId.Create(id), cancellationToken);
 
             return entity;
+        }
+
+        public async Task<Player?> GetFirstWhere(Expression<Func<Player, bool>> predicate, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Players.FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
         public async Task DeleteAsync(Player player)
