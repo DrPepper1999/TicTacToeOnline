@@ -14,7 +14,8 @@ namespace TicTacToeOnline.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<CreateRoomRequest, CreateRoomCommand>();
+            config.NewConfig<CreateRoomRequest, CreateRoomCommand>()
+                .Map(dest => dest.PlayerId, src => PlayerId.Create(Guid.Parse(src.PlayerId)));
 
             config.NewConfig<(CreateRoomRequest request, PlayerId playerId), CreateRoomCommand>()
                 .Map(dest => dest.PlayerId, src => src.playerId)
