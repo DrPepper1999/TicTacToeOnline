@@ -41,6 +41,7 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
 
         public async Task CreateRoom(CreatePlayerRequest createPlayerRequest, CreateRoomRequest createRoomRequest)
         {
+            // if user not authenticated
             var createPlayerCommand = _mapper.Map<CreatePlayerCommand>(createPlayerRequest);
 
             var createPlayerResult = await _mediator.Send(createPlayerCommand);
