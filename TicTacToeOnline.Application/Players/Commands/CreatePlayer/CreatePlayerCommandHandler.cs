@@ -19,9 +19,15 @@ namespace TicTacToeOnline.Application.Players.Commands.CreatePlayer
             _playerRepository = playerRepository;
         }
 
-        public Task<ErrorOr<Player>> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Player>> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
         {
-            return null;
+            var player = Player.Create(request.UserId, request.Name, request.ConnectionId);
+
+            await _playerRepository.AddAsync(player, cancellationToken);
+
+            await _playerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+            return player;
         }
     }
 }
