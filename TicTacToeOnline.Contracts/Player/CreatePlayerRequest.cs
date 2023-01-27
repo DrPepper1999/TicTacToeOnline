@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace TicTacToeOnline.Contracts.Player
 {
-    public record CreatePlayerRequest(string Name, string ConnectionId);
+    public record CreatePlayerRequest(string Name);
 }
