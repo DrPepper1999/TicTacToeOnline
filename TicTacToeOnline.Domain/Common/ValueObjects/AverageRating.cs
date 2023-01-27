@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TicTacToeOnline.Domain.Common.Models;
 
 namespace TicTacToeOnline.Domain.Common.ValueObjects
 {
     public sealed class AverageRating : ValueObject
     {
+        [JsonConstructor]
         private AverageRating(double value, int numRatings)
         {
             Value = value;
