@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using TicTacToeOnline.Domain.Common.Models;
 
 namespace TicTacToeOnline.Domain.Common.ValueObjects
 {
     public sealed class Rating : ValueObject
     {
+        [JsonConstructor]
         private Rating(int value)
         {
             Value = value;
