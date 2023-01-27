@@ -24,7 +24,12 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
                 request.PlayersForStart,
                 request.Password);
 
-            await _roomRepository.AddAsync(room, cancellationToken);
+            if (room.IsError)
+            {
+                return room.Errors;
+            }
+
+            await _roomRepository.AddAsync(room.Value, cancellationToken);
 
             await _roomRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
