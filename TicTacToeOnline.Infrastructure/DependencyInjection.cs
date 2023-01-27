@@ -5,11 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Application.Common.Interfaces.Services;
 using TicTacToeOnline.Infrastructure.Authentication;
+using TicTacToeOnline.Infrastructure.BackgroundJobs;
 using TicTacToeOnline.Infrastructure.Persistence;
+using TicTacToeOnline.Infrastructure.Persistence.Interceptors;
 using TicTacToeOnline.Infrastructure.Persistence.Repositories;
 using TicTacToeOnline.Infrastructure.Services;
 namespace TicTacToeOnline.Infrastructure
@@ -21,7 +24,8 @@ namespace TicTacToeOnline.Infrastructure
         {
             services
                 .AddAuth(configuration)
-                .AddPersistence(configuration);
+                .AddPersistence(configuration)
+                .AddQuartz(configuration);
 
             services.AddSingleton<IDataTimeProvider, DataTimeProvider>();
 
@@ -31,11 +35,19 @@ namespace TicTacToeOnline.Infrastructure
         public static IServiceCollection AddPersistence(this IServiceCollection services,
             ConfigurationManager configuration)
         {
-            services.AddDbContext<TicTacToeOnlineDbContext>(option =>
-                option.UseNpgsql("Host=localhost;Port=5432;Database=TicTacToeOnline;Username=postgres;Password=Lfybbk1999"));
+            services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
-                services.AddScoped<IUserRepository, UserRepository>();
+            services.AddDbContext<TicTacToeOnlineDbContext>((sp, option) =>
+            {
+                var interceptor = sp.GetService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+                option
+                    .UseNpgsql("Host=localhost;Port=5432;Database=TicTacToeOnlineDb;Username=postgres;Password=Lfybbk1999")
+                    .AddInterceptors(interceptor!);
+            });
+
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
 
             return services;
         }
@@ -61,6 +73,32 @@ namespace TicTacToeOnline.Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwtSettings.Secret))
                 });
+
+            return service;
+        }
+
+        public static IServiceCollection AddQuartz(this IServiceCollection service,
+            ConfigurationManager configuration)
+        {
+            var backgroundJobsSettings = new BackgroundJobsSettings();
+            configuration.Bind(BackgroundJobsSettings.SectionName, backgroundJobsSettings);
+
+            service.AddQuartz(configure =>
+            {
+                var jobKey = new JobKey(nameof(ProcessOutMessagesJob));
+
+                configure
+                    .AddJob<ProcessOutMessagesJob>(jobKey)
+                    .AddTrigger(trigger =>
+                        trigger.ForJob(jobKey)
+                            .WithSimpleSchedule(schedule =>
+                                schedule.WithIntervalInSeconds(backgroundJobsSettings.IntervalInSeconds)
+                                    .RepeatForever()));
+
+                configure.UseMicrosoftDependencyInjectionJobFactory();
+            });
+
+            service.AddQuartzHostedService();
 
             return service;
         }

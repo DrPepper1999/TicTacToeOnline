@@ -2,6 +2,7 @@
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.PlayerAggregate;
 using TicTacToeOnline.Domain.RoomAggregate;
+using TicTacToeOnline.Infrastructure.Persistence.Outbox;
 
 namespace TicTacToeOnline.Infrastructure.Persistence
 {
@@ -14,6 +15,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence
 
         public DbSet<Room> Rooms { get; set; } = null!;
         public DbSet<Player> Players { get; set; } = null!;
+        public DbSet<OutboxMessage> OutBoxMessages { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
