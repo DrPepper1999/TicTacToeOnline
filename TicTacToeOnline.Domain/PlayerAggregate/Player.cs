@@ -36,9 +36,13 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             AverageRating = averageRating;
         }
 
-        public static ErrorOr<Player> Create(UserId? userId, string name)
+        public static Player Create(UserId? userId, string name)
         {
-            return new Player(PlayerId.CreateUnique(), userId, name, Mark.Empty, AverageRating.CreateNew());
+            return new Player(
+                PlayerId.CreateUnique(),
+                userId, name,
+                Mark.Empty,
+                AverageRating.CreateNew());
         }
 
         public Error? SetMark(Mark mark)

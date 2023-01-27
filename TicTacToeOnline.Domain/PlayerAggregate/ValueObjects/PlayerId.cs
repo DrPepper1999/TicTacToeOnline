@@ -1,4 +1,5 @@
-﻿using TicTacToeOnline.Domain.Common.Models;
+﻿using Newtonsoft.Json;
+using TicTacToeOnline.Domain.Common.Models;
 
 namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
 {
@@ -6,6 +7,7 @@ namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
     {
         public Guid Value { get; }
 
+        [JsonConstructor]
         private PlayerId(Guid value)
         {
             Value = value;

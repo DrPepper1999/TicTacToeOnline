@@ -19,16 +19,15 @@ namespace TicTacToeOnline.Domain.RoomAggregate.Entities
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdateDateTime { get; private set; }
 
-        public Game(GameId id, PlayerId playerId, int sizeMap) : base(id)
+        public Game(GameId id, int sizeMap) : base(id)
         {
             Map = Map.Create(sizeMap);
             PlayerTurn = PlayerId.Create(Guid.Empty);
-            AddPlayer(playerId);
         }
 
-        public static Game Create(PlayerId playerId, int mapSize = 3)
+        public static Game Create (int mapSize = 3)
         {
-            return new Game(GameId.CreateUnique(), playerId, mapSize);
+            return new Game(GameId.CreateUnique(), mapSize);
         }
 
         public void SetPlayerTurn(Guid playerId)
