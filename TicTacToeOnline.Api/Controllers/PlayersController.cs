@@ -25,7 +25,7 @@ namespace TicTacToeOnline.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePlayerRequest request)
         {
-            var command = _mapper.Map<CreatePlayerCommand>((request, ));
+            var command = _mapper.Map<CreatePlayerCommand>(request);
 
             var createPlayerResult = await _mediator.Send(command);
 
