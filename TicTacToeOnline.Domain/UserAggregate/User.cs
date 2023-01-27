@@ -1,5 +1,4 @@
 ﻿using TicTacToeOnline.Domain.Common.Models;
-using TicTacToeOnline.Domain.DomainEvents;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 
@@ -24,11 +23,7 @@ namespace TicTacToeOnline.Domain.UserAggregate
 
         public static User Create(string name, string email, string password)
         {
-            var user = new User(name, email, password);
-
-            user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id, user.Name));
-
-            return user;
+            return new User(name, email, password);
         }
 
 #pragma warning disable CS8618
