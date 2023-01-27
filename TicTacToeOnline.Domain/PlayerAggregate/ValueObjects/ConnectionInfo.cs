@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using TicTacToeOnline.Domain.Common.Models;
 
 namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
@@ -19,6 +15,7 @@ namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
         /// </summary>
         public string ConnectionId { get; private set; } = null!;
 
+        [JsonConstructor]
         private ConnectionInfo(string connectionId)
         {
             ConnectionId = connectionId;
