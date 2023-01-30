@@ -7,9 +7,13 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
         public CreateRoomCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
-            //RuleFor(x => x.Password).NotEmpty();
-            RuleFor(x => x.PlayersForStart).InclusiveBetween(2, 8)
-                .Must(x => !x.HasValue || x % 2 == 0);
+            RuleFor(x => x.PlayersForStart)
+                .NotEmpty()
+                .InclusiveBetween(2, 8);
+            RuleFor(x => x.MapSize)
+                .NotEmpty()
+                .InclusiveBetween(3, 12)
+                .Must(x => x % 3 == 0);
             RuleFor(x => x.PlayerId).NotEmpty();
         }
     }

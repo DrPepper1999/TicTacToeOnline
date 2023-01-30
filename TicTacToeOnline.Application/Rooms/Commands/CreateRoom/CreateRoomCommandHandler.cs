@@ -22,7 +22,8 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
                 request.Name,
                 request.PlayerId,
                 request.PlayersForStart,
-                request.Password);
+                request.Password,
+                request.MapSize);
 
             if (room.IsError)
             {
