@@ -8,5 +8,5 @@ using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Domain.DomainEvents
 {
-    public sealed record RoomCreatedDomainEvent(RoomId roomId) : IDomainEvent;
+    public sealed record RoomCreatedDomainEvent(RoomId RoomId) : IDomainEvent;
 }
