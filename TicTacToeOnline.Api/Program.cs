@@ -1,9 +1,7 @@
-using Quartz;
 using TicTacToeOnline.Api;
 using TicTacToeOnline.Api.Hubs.TicTacToe;
 using TicTacToeOnline.Application;
 using TicTacToeOnline.Infrastructure;
-using TicTacToeOnline.Infrastructure.BackgroundJobs;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -43,7 +41,8 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
-    app.MapHub<TicTacToeHub>("/gameHub");
+    app.MapHub<TicTacToeHub>("/ticTacToeHub");
+    app.MapHub<TicTacToeHub>("/ticTacToeHubAuth").RequireAuthorization();
 
     app.MapControllers();
 
