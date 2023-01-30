@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
@@ -12,6 +13,7 @@ namespace TicTacToeOnline.Application.Authentication.Commands.Register
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
+
         public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
@@ -23,14 +25,16 @@ namespace TicTacToeOnline.Application.Authentication.Commands.Register
         {
             await Task.CompletedTask;
 
-            if (_userRepository.GetUserByEmail(command.Email) is not null)
+            if (await _userRepository.GetUserByEmail(command.Email) is not null)
             {
                 return Errors.User.DuplicateEmail;
             }
 
             var user = User.Create(command.Name, command.Email, command.Password);
 
-            _userRepository.Add(user);
+            await _userRepository.Add(user);
+
+            await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
