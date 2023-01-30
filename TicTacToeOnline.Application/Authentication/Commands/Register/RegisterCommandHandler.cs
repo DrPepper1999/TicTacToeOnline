@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
