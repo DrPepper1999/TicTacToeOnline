@@ -1,9 +1,11 @@
-﻿using TicTacToeOnline.Domain.Common.Models;
+﻿using Newtonsoft.Json;
+using TicTacToeOnline.Domain.Common.Models;
 
 namespace TicTacToeOnline.Domain.UserAggregate.ValueObjects
 {
     public sealed class UserId : ValueObject
     {
+        [JsonConstructor]
         private UserId(Guid value)
         {
             Value = value;

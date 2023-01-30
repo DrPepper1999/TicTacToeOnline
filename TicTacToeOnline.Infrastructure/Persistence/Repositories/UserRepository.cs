@@ -1,19 +1,28 @@
-﻿using TicTacToeOnline.Application.Common.Interfaces.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.UserAggregate;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private static readonly List<User> _users = new();
-        public User? GetUserByEmail(string email)
+        private readonly TicTacToeOnlineDbContext _dbContext;
+
+        public UserRepository(TicTacToeOnlineDbContext dbContext)
         {
-            return _users.SingleOrDefault(u => u.Email == email);
+            _dbContext = dbContext;
         }
 
-        public void Add(User user)
+        public IUnitOfWork UnitOfWork => _dbContext;
+
+        public async Task<User?> GetUserByEmail(string email)
         {
-            _users.Add(user);
+            return await _dbContext.User.SingleOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task Add(User user)
+        {
+           await _dbContext.User.AddAsync(user);
         }
     }
 }

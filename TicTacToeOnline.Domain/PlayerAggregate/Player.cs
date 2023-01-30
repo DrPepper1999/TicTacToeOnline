@@ -2,6 +2,7 @@
 using TicTacToeOnline.Domain.Common.Errors;
 using TicTacToeOnline.Domain.Common.Models;
 using TicTacToeOnline.Domain.Common.ValueObjects;
+using TicTacToeOnline.Domain.DomainEvents;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
@@ -64,6 +65,8 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             var connection = ConnectionInfo.Create(connectionId);
 
             _connections.Add(connection);
+
+            RaiseDomainEvent(new PlayerConnectionAppendDomainEvent(this));
         }
 
         /// <summary>
