@@ -1,10 +1,11 @@
 ﻿using TicTacToeOnline.Domain.UserAggregate;
+using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User, UserId>
     {
-        public User? GetUserByEmail(string email);
-        public void Add(User user);
+        public Task<User?> GetUserByEmail(string email);
+        public Task Add(User user);
     }
 }
