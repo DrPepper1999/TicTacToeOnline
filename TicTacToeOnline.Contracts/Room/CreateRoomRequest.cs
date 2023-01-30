@@ -9,7 +9,7 @@ namespace TicTacToeOnline.Contracts.Room
     public record CreateRoomRequest(
         string Name,
         string? Password,
-        int? PlayersForStart,
-        string PlayerId
+        int PlayersForStart,
+        int MapSize
     );
 }
