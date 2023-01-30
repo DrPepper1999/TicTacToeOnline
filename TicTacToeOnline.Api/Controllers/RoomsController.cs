@@ -10,7 +10,7 @@ using TicTacToeOnline.Contracts.Room;
 
 namespace TicTacToeOnline.Api.Controllers
 {
-    [Route("[controller]/[action]")] 
+    [Route("[controller]/{playerId}/[action]")] 
     public class RoomsController : ApiController
     {
         private readonly IMapper _mapper;
@@ -36,14 +36,14 @@ namespace TicTacToeOnline.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRoomRequest request)
+        public async Task<IActionResult> Create(CreateRoomRequest request, string playerId)
         {
-            var command = _mapper.Map<CreateRoomCommand>(request);
+            var command = _mapper.Map<CreateRoomCommand>((request, playerId));
 
             var createRoomResult = await _mediator.Send(command);
 
             return createRoomResult.Match(
-                room => Ok(_mapper.Map<RoomResponse>(room)), // CreatedAtAction(nameof(GetRoom), new {roomId = room.Id}, room)
+                room => Ok(_mapper.Map<RoomResponse>(room)), // CreatedAtAction(nameof(GetRoom), new {RoomId = room.Id}, room)
                 Problem
             );
         }

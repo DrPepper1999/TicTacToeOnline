@@ -30,7 +30,7 @@ namespace TicTacToeOnline.Api.Controllers
             var createPlayerResult = await _mediator.Send(command);
 
             return createPlayerResult.Match(
-                room => Ok(_mapper.Map<PlayerResponse>(room)), // CreatedAtAction(nameof(GetPlayer), new {roomId = room.Id}, room)
+                room => Ok(_mapper.Map<PlayerResponse>(room)), // CreatedAtAction(nameof(GetPlayer), new {RoomId = room.Id}, room)
                 Problem
             );
         }
