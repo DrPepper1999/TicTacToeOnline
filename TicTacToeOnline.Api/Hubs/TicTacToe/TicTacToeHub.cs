@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using ErrorOr;
 using Microsoft.AspNetCore.SignalR;
 using MapsterMapper;
 using MediatR;
@@ -8,8 +7,9 @@ using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Contracts.Player;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 using TicTacToeOnline.Contracts.Room;
-using TicTacToeOnline.Domain.Common.Errors;
 using static TicTacToeOnline.Domain.Common.Errors.Errors.Authentication;
+using TicTacToeOnline.Application.Games.Commands.MakeMove;
+using TicTacToeOnline.Domain.Common.ValueObjects;
 
 namespace TicTacToeOnline.Api.Hubs.TicTacToe
 {
@@ -26,7 +26,13 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
             _mediator = mediator;
         }
 
-        public async Task CreateRoomAuth(CreateRoomRequest createRoomHubRequest)
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+
+            return base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task CreateRoomAuth(CreateRoomRequest request)
         {
             // if user authenticated
             var userIdentity = (Context.User!.Identity as ClaimsIdentity);
@@ -53,8 +59,8 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
             await Clients.Caller.setPlayer(_mapper.Map<PlayerResponse>(playerResult.Value));
 
             var createRoomCommand = _mapper
-               .Map<CreateRoomCommand>((createRoomHubRequest, playerResult.Value.Id));
-
+               .Map<CreateRoomCommand>((request, playerResult.Value.Id.Value));
+            var test = GameSetting.Create();
             var createRoomResult = await _mediator.Send(createRoomCommand);
 
             if (createRoomResult.IsError)
@@ -72,7 +78,7 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
             await Clients.Caller.setConnectionInfo(true, null);
         }
 
-        public async Task CreateRoom(CreatePlayerRequest createPlayerRequest,
+        public async Task CreateRoomGuest(CreatePlayerRequest createPlayerRequest,
             CreateRoomRequest createRoomHubRequest)
         {
             await Task.Delay(100);
@@ -87,6 +93,23 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
         {
             return UserId.Create(Guid.Parse(userIdentity!
                 .FindFirst(ClaimTypes.NameIdentifier)!.Value));
+        }
+
+        public async Task MakeMove(MoveRequest request)
+        {
+            var connection = Context.ConnectionId;
+
+            var command = _mapper.Map<MakeMoveCommand>(request);
+
+            var makeMoveResult = await _mediator.Send(command);
+
+            if (makeMoveResult.IsError)
+            {
+
+            }
+
+            var gameId = makeMoveResult.Value.GameId.Value.ToString();
+            await Clients.Group(gameId).makeMove(_mapper.Map<MoveResponse>(makeMoveResult.Value));
         }
     }
 }
