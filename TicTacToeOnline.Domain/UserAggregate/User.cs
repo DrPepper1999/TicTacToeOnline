@@ -10,6 +10,9 @@ namespace TicTacToeOnline.Domain.UserAggregate
         public string Name { get; private set; } = null!;
         public string Email { get; private set; } = null!;
         public string Password { get; private set; } = null!;
+        public string? RefreshToken { get; private set; } = null;
+        public DateTime TokenCreated { get; private set; }
+        public DateTime TokenExpires { get; private set; }
 
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdateDateTime { get; private set; }
@@ -26,9 +29,17 @@ namespace TicTacToeOnline.Domain.UserAggregate
         {
             var user = new User(name, email, password);
 
-            user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id, user.Name));
+            user.RaiseDomainEvent(new UserCreatedDomainEvent(Guid.NewGuid(), user.Id, user.Name));
 
             return user;
+        }
+
+        public void SetRefreshToken(string refreshToken, DateTime tokenExpires)
+        {
+            RefreshToken = refreshToken;
+            TokenCreated = DateTime.UtcNow;
+            TokenExpires = tokenExpires;
+            RaiseDomainEvent(new RefreshTokenSetDomainEvent(Guid.NewGuid(), this));
         }
 
 #pragma warning disable CS8618
