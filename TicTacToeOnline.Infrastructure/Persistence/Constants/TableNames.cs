@@ -17,6 +17,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Constants
         internal const string Attendees = nameof(Attendees);
 
         internal const string OutboxMessages = nameof(OutboxMessages);
+
         internal const string OutboxMessageConsumers = nameof(OutboxMessageConsumers);
     }
 }
