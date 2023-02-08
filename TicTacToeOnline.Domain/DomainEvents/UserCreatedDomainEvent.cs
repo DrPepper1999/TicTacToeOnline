@@ -8,5 +8,5 @@ using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Domain.DomainEvents
 {
-    public sealed record UserCreatedDomainEvent(UserId UserId, string Name) : IDomainEvent;
+    public sealed record UserCreatedDomainEvent(Guid Id, UserId UserId, string Name) : IDomainEvent;
 }
