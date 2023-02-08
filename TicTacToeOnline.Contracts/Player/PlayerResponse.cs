@@ -9,7 +9,6 @@ namespace TicTacToeOnline.Contracts.Player
     public record PlayerResponse(
         string Id,
         string Name,
-        string Mark,
         float? AverageRating,
         string? UserId,
         List<ConnectionInfoResponse> Connections,
