@@ -15,5 +15,7 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
         public Task setRoom(RoomResponse roomResponse);
 
         public Task setConnectionInfo(bool isSuccessConnection, string[]? errors);
+
+        public Task makeMove(MoveResponse response);
     }
 }
