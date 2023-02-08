@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
+using TicTacToeOnline.Domain.Common.ValueObjects;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate;
 
@@ -20,17 +21,11 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
 
             var room = Room.Create(
                 request.Name,
-                request.PlayerId,
-                request.PlayersForStart,
-                request.Password,
-                request.MapSize);
+                PlayerId.Create(request.PlayerId), 
+                GameSetting.Create(request.MapSize, request.MaxPlayers, request.TeamCount),
+                request.Password);
 
-            if (room.IsError)
-            {
-                return room.Errors;
-            }
-
-            await _roomRepository.AddAsync(room.Value, cancellationToken);
+            await _roomRepository.AddAsync(room, cancellationToken);
 
             await _roomRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
