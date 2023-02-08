@@ -1,46 +1,45 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
-using TicTacToeOnline.Domain.RoomAggregate;
+using TicTacToeOnline.Domain.GameAggregate;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
 {
-    public class RoomRepository : IRoomRepository
+    public class GameRepository : IGameRepository
     {
         private readonly TicTacToeOnlineDbContext _dbContext;
 
-        public RoomRepository(TicTacToeOnlineDbContext dbContext)
+        public GameRepository(TicTacToeOnlineDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public IUnitOfWork UnitOfWork => _dbContext;
-
-        public async Task AddAsync(Room room, CancellationToken cancellationToken = default)
+        public async Task AddAsync(Game game, CancellationToken cancellationToken = default)
         {
-            await _dbContext.AddAsync(room, cancellationToken);
+            await _dbContext.AddAsync(game, cancellationToken);
         }
 
-        public async Task<Room?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Game?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var entity = await _dbContext.Rooms
+            var entity = await _dbContext.Games
                 .FirstOrDefaultAsync(x => x.Id == RoomId.Create(id), cancellationToken);
 
             return entity;
         }
 
-        public async Task UpdateAsync(Room room, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(Game game, CancellationToken cancellationToken = default)
         {
-            _dbContext.Entry(room).State = EntityState.Modified;
+            _dbContext.Entry(game).State = EntityState.Modified;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(Room room)
+        public async Task DeleteAsync(Game game)
         {
             await Task.CompletedTask;
 
-            _dbContext.Rooms.Remove(room);
+            _dbContext.Games.Remove(game);
         }
     }
 }

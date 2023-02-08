@@ -39,7 +39,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             return await _dbContext.Players.FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
-        public async Task Update(Player player, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(Player player, CancellationToken cancellationToken = default)
         {
             _dbContext.Entry(player).State = EntityState.Modified;
 
