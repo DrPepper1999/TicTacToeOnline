@@ -15,7 +15,7 @@ namespace TicTacToeOnline.Domain.RoomAggregate.ValueObjects
 
         public static RoomId CreateUnique()
         {
-            return new(Guid.NewGuid());
+            return new RoomId(Guid.NewGuid());
         }
 
         public static RoomId Create(Guid roomId)
