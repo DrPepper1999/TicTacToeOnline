@@ -18,4 +18,11 @@
     <ProjectReference Include="..\TicTacToeOnline.Domain\TicTacToeOnline.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rooms\Commands\UpdateRoom\" />
+    <Folder Include="Rooms\Events\" />
+    <Folder Include="Teams\Commands\" />
+    <Folder Include="Users\Events\" />
+  </ItemGroup>
+
 </Project>
