@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate;
-using TicTacToeOnline.Domain.RoomAggregate.Entities;
 using TicTacToeOnline.Domain.RoomAggregate.Enums;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
-using TicTacToeOnline.Infrastructure.Persistence.Common.Conversion;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
 {
@@ -14,7 +11,8 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Room> builder)
         {
             ConfigureRoomsTable(builder);
-            ConfigureGameTable(builder);
+            ConfigureRoomTeamIdsTable(builder);
+            ConfigureRoomPlayerIdsTable(builder);
         }
 
         private void ConfigureRoomsTable(EntityTypeBuilder<Room> builder)
@@ -40,70 +38,46 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
             builder.Property(r => r.Password)
                 .HasMaxLength(16);
 
+            builder.OwnsOne(r => r.GameSetting);
+
 
         }
 
-        private void ConfigureGameTable(EntityTypeBuilder<Room> builder)
+        private void ConfigureRoomTeamIdsTable(EntityTypeBuilder<Room> builder)
         {
-            builder.OwnsOne(r => r.Game, gb =>
+            builder.OwnsMany(r => r.TeamIds, tb =>
             {
-                gb.ToTable("Game");
+                tb.ToTable("RoomTeamIds");
 
-                gb.WithOwner().HasForeignKey("RoomId");
+                tb.WithOwner().HasForeignKey("RoomId");
 
-                gb.HasKey("Id", "RoomId");
+                tb.HasKey("Id");
 
-                gb.Property(g => g.Id)
-                    .HasColumnName("GameId")
-                    .ValueGeneratedNever()
-                    .HasConversion(
-                        id => id.Value,
-                        value => GameId.Create(value));
-
-                gb.Property(g => g.PlayerTurn)
-                    .HasConversion(
-                        id => id.Value,
-                        value => PlayerId.Create(value));
-
-                gb.OwnsOne(g => g.Map, mb =>
-                {
-                    mb.ToTable("Map");
-
-                    mb.WithOwner().HasForeignKey("GameId", "RoomId");
-
-                    mb.HasKey(nameof(Map.Id), "GameId", "RoomId");
-
-                    mb.Property(m => m.Id)
-                        .HasColumnName("MapId")
-                        .ValueGeneratedNever()
-                        .HasConversion(
-                            id => id.Value,
-                            value => MapId.Create(value));
-
-                    mb.Property(m => m.Size)
-                        .HasMaxLength(16);
-
-                    mb.Property("_fields")
-                        .HasConversion<MapConverter>();
-                });
-
-                gb.OwnsMany(g => g.PlayerIds, pib =>
-                {
-                    pib.ToTable("PlayerIds");
-
-                    pib.WithOwner().HasForeignKey("GameId", "RoomId");
-
-                    pib.Property<int>("Id");
-                    pib.HasKey("Id");
-
-                    pib.Property(p => p.Value)
-                        .HasColumnName("PlayerIds")
-                        .ValueGeneratedNever();
-                });
-
-                gb.Navigation(g => g.PlayerIds).Metadata.SetField("_playerIds");
-                gb.Navigation(g => g.PlayerIds).UsePropertyAccessMode(PropertyAccessMode.Field);
+                tb.Property(t => t.Value)
+                    .HasColumnName("TeamId")
+                    .ValueGeneratedNever();
             });
+            builder.Metadata.FindNavigation(nameof(Room.TeamIds))!
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+        }
+
+        private void ConfigureRoomPlayerIdsTable(EntityTypeBuilder<Room> builder)
+        {
+            builder.OwnsMany(m => m.PlayerIds, dib =>
+            {
+                dib.ToTable("RoomPlayerIds");
+
+                dib.WithOwner().HasForeignKey("RoomId");
+
+                dib.HasKey("Id");
+
+                dib.Property(d => d.Value)
+                    .HasColumnName("PlayerId")
+                    .ValueGeneratedNever();
+            });
+
+            builder.Metadata.FindNavigation(nameof(Room.PlayerIds))!
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

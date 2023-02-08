@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TicTacToeOnline.Domain.PlayerAggregate;
 using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
-using TicTacToeOnline.Domain.RoomAggregate.Enums;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
 {
@@ -30,11 +29,6 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
             builder.Property(p => p.Name)
                 .HasMaxLength(100);
 
-            builder.Property(p => p.Mark)
-                .HasConversion(
-                    mark => mark.ToString(),
-                    str => (Mark)Enum.Parse(typeof(Mark), str));
-
             builder.OwnsOne(p => p.AverageRating);
 
             builder.Property(p => p.UserId)
@@ -54,7 +48,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
 
                 cb.WithOwner().HasForeignKey("PlayerId");
 
-                cb.HasKey("Id", "PlayerId");
+                cb.HasKey("Id");
             });
 
             builder.Metadata.FindNavigation(nameof(Player.Connections))!
