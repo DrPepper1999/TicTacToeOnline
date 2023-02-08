@@ -3,6 +3,7 @@ using MediatR;
 using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Interfaces.Authentication;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
+using TicTacToeOnline.Application.Common.Interfaces.Services;
 using TicTacToeOnline.Domain.Common.Errors;
 using TicTacToeOnline.Domain.UserAggregate;
 
