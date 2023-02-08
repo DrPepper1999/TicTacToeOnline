@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicTacToeOnline.Domain.RoomAggregate;
+﻿using TicTacToeOnline.Domain.RoomAggregate;
 using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
@@ -13,6 +8,8 @@ namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
         Task AddAsync(Room room, CancellationToken cancellationToken = default);
 
         Task<Room?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task UpdateAsync(Room room, CancellationToken cancellationToken = default);
 
         Task DeleteAsync(Room room);
     }
