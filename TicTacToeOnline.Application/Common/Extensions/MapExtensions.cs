@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using TicTacToeOnline.Domain.RoomAggregate.Enums;
+using TicTacToeOnline.Domain.Common.Enums;
 
 namespace TicTacToeOnline.Application.Common.Extensions
 {
