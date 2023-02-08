@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 using TicTacToeOnline.Application.Common.Extensions;
-using TicTacToeOnline.Domain.RoomAggregate.Enums;
+using TicTacToeOnline.Domain.Common.Enums;
 
 namespace TicTacToeOnline.Infrastructure.Persistence.Common.Conversion
 {
