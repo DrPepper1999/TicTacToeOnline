@@ -60,7 +60,6 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
 
             var createRoomCommand = _mapper
                .Map<CreateRoomCommand>((request, playerResult.Value.Id.Value));
-            var test = GameSetting.Create();
             var createRoomResult = await _mediator.Send(createRoomCommand);
 
             if (createRoomResult.IsError)
