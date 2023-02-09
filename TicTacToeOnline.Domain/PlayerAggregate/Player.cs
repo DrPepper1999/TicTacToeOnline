@@ -24,6 +24,7 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             PlayerId id,
             UserId? userId,
             string name,
+            Uri? profileImage,
             AverageRating averageRating)
             : base(id)
         {
@@ -32,11 +33,13 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
             AverageRating = averageRating;
         }
 
-        public static Player Create(UserId? userId, string name)
+        public static Player Create(UserId? userId, string name, Uri? profileImage = null)
         {
+            var playerId = userId is not null ? PlayerId.Create(userId) : PlayerId.CreateUnique();
             return new Player(
-                PlayerId.CreateUnique(),
+                playerId,
                 userId, name,
+                profileImage,
                 AverageRating.CreateNew());
         }
 

@@ -1,24 +1,30 @@
 ﻿using Newtonsoft.Json;
 using TicTacToeOnline.Domain.Common.Models;
+using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 
 namespace TicTacToeOnline.Domain.PlayerAggregate.ValueObjects
 {
     public sealed class PlayerId : ValueObject
     {
-        public Guid Value { get; }
+        public string Value { get; private set; }
 
         [JsonConstructor]
-        private PlayerId(Guid value)
+        private PlayerId(string value)
         {
             Value = value;
         }
 
         public static PlayerId CreateUnique()
         {
-            return new(Guid.NewGuid());
+            return new PlayerId(Guid.NewGuid().ToString());
         }
 
-        public static PlayerId Create(Guid playerId)
+        public static PlayerId Create(UserId userId)
+        {
+            return new PlayerId($"Player_{userId.Value}");
+        }
+
+        public static PlayerId Create(string playerId)
         {
             return new PlayerId(playerId);
         }
