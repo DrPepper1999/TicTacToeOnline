@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TicTacToeOnline.Contracts.Player
+﻿namespace TicTacToeOnline.Contracts.Player
 {
     public record PlayerResponse(
         string Id,
         string Name,
+        string? Uri,
         float? AverageRating,
         string? UserId,
         List<ConnectionInfoResponse> Connections,
