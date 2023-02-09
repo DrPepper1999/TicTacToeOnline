@@ -33,11 +33,11 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Team>> GetRangeByIdsAsync(List<Guid> ids, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Team>> GetRangeByIdsAsync(List<TeamId> ids, CancellationToken cancellationToken = default)
         {
             var entities = await _dbContext
                 .Teams
-                .Where(t => ids.Contains(t.Id.Value))
+                .Where(t => ids.Contains(t.Id))
                 .ToListAsync(cancellationToken);
 
             return entities;

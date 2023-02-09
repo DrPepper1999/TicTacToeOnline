@@ -21,7 +21,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
             await _dbContext.AddAsync(player, cancellationToken);
         }
 
-        public async Task<Player?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Player?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             var entity = await _dbContext.Players
                 .FirstOrDefaultAsync(x => x.Id == PlayerId.Create(id.ToString()), cancellationToken);
