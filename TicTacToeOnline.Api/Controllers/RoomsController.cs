@@ -1,14 +1,19 @@
-﻿using MapsterMapper;
+﻿using Mapster;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
+using TicTacToeOnline.Application.Rooms.Queries.GetTeams;
+using TicTacToeOnline.Application.Teams.Queries.GetRangeTeamList;
+using TicTacToeOnline.Application.Teams.Queries.GetTeamList;
 using TicTacToeOnline.Contracts.Room;
+using TicTacToeOnline.Contracts.Team;
 
 namespace TicTacToeOnline.Api.Controllers
 {
-    [Route("[controller]/{playerId}/[action]")] 
+    [Route("[controller]/[action]")] 
     public class RoomsController : ApiController
     {
         private readonly IMapper _mapper;
@@ -33,7 +38,7 @@ namespace TicTacToeOnline.Api.Controllers
             );
         }
 
-        [HttpPost]
+        [HttpPost("playerId")]
         public async Task<IActionResult> Create(CreateRoomRequest request, string playerId)
         {
             var command = _mapper.Map<CreateRoomCommand>((request, playerId));
@@ -56,6 +61,19 @@ namespace TicTacToeOnline.Api.Controllers
             return deleteRoomResult.Match(
                 room => NoContent(),
                 Problem);
+        }
+
+        [HttpGet("{roomId}")]
+        public async Task<IActionResult> GetTeamsAsync(Guid roomId)
+        {
+            var query = new GetRoomTeamsQuery(roomId);
+
+            var teamsResult = await _mediator.Send(query);
+
+            return teamsResult.Match(
+                teams => Ok(teams.Adapt<IEnumerable<TeamResponse>>()),
+                Problem);
+
         }
     }
 }
