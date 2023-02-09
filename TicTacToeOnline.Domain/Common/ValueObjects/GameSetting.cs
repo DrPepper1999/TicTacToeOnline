@@ -5,9 +5,9 @@ namespace TicTacToeOnline.Domain.Common.ValueObjects
 {
     public class GameSetting : ValueObject
     {
-        public int MapSize { get; }
-        public int MaxPlayers { get; }
-        public int TeamCount { get; }
+        public int MapSize { get; private set; }
+        public int MaxPlayers { get; private set; }
+        public int TeamCount { get; private set; }
 
         [JsonConstructor]
         private GameSetting(int mapSize, int maxPlayers, int teamCount)
@@ -27,11 +27,6 @@ namespace TicTacToeOnline.Domain.Common.ValueObjects
             yield return MapSize;
             yield return MaxPlayers;
             yield return TeamCount;
-        }
-
-        private GameSetting()
-        {
-
         }
     }
 }
