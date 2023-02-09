@@ -17,7 +17,10 @@ namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
 
         Task<Player?> GetFirstWhere(Expression<Func<Player, bool>> predicate, CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<Player>> GetRangeByIdsAsync(List<string> ids, CancellationToken cancellationToken = default);
+
         Task UpdateAsync(Player player, CancellationToken cancellationToken = default);
+
         Task DeleteAsync(Player player);
     }
 }

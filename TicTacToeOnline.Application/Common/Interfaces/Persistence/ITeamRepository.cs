@@ -8,7 +8,11 @@ namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
     {
         Task AddAsync(Team team, CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<Team>> GetAllAsync(CancellationToken cancellationToken = default);
+
         Task<Team?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<Team>> GetRangeByIdsAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 
         Task DeleteAsync(Team team);
     }
