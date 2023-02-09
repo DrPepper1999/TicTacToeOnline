@@ -1,11 +1,9 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TicTacToeOnline.Application.Players.Commands.CreatePlayer;
 using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
-using TicTacToeOnline.Contracts.Player;
 using TicTacToeOnline.Contracts.Room;
 
 namespace TicTacToeOnline.Api.Controllers
