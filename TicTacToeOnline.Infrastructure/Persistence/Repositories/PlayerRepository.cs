@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.PlayerAggregate;
@@ -29,7 +24,7 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
         public async Task<Player?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await _dbContext.Players
-                .FirstOrDefaultAsync(x => x.Id == PlayerId.Create(id), cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == PlayerId.Create(id.ToString()), cancellationToken);
 
             return entity;
         }
@@ -37,6 +32,16 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Repositories
         public async Task<Player?> GetFirstWhere(Expression<Func<Player, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Players.FirstOrDefaultAsync(predicate, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Player>> GetRangeByIdsAsync(List<string> ids, CancellationToken cancellationToken = default)
+        {
+            var entities = await _dbContext
+                .Players
+                .Where(t => ids.Contains(t.Id.Value))
+                .ToListAsync(cancellationToken);
+
+            return entities;
         }
 
         public async Task UpdateAsync(Player player, CancellationToken cancellationToken = default)
