@@ -26,11 +26,14 @@ namespace TicTacToeOnline.Application.Teams.Events
                 return;
             }
 
+            var mark = (Mark)1;
             foreach (var teamId in notification.TeamIds)
             {
-                var team = Team.Create(Mark.Empty, teamId); // TODO ставить разные Mark возможно с помощью умного enum
+                var team = Team.Create(mark, teamId); // TODO ставить разные Mark возможно с помощью умного enum
 
                 await _teamRepository.AddAsync(team, cancellationToken);
+
+                mark++;
             }
 
             await _teamRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
