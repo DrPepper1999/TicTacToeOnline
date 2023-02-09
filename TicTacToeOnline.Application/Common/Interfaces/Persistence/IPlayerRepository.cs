@@ -13,7 +13,7 @@ namespace TicTacToeOnline.Application.Common.Interfaces.Persistence
     {
         Task AddAsync(Player player, CancellationToken cancellationToken = default);
 
-        Task<Player?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Player?> GetByIdAsync(string id, CancellationToken cancellationToken = default);
 
         Task<Player?> GetFirstWhere(Expression<Func<Player, bool>> predicate, CancellationToken cancellationToken = default);
 
