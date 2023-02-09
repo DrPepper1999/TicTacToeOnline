@@ -25,7 +25,7 @@ namespace TicTacToeOnline.Domain.RoomAggregate
 
 
 
-        private Room(RoomId id, string name, string? password, GameSetting gameSetting)
+        private Room(RoomId id, string name, string? password, GameSetting gameSetting, List<TeamId> teamIds)
             : base(id)
         {
             Name = name;
@@ -38,15 +38,19 @@ namespace TicTacToeOnline.Domain.RoomAggregate
             string name,
             PlayerId playerId,
             GameSetting gameSetting,
+            List<TeamId> teamIds,
             string? password = null)
         {
             var room = new Room(
                 RoomId.CreateUnique(),
                 name,
                 password,
-                gameSetting);
+                gameSetting,
+                teamIds);
 
             room.AddPlayer(playerId);
+
+            room.AddRangeTeamId(teamIds);
 
             room.RaiseDomainEvent(new RoomCreatedDomainEvent(Guid.NewGuid(), room.Id));
 
@@ -56,6 +60,14 @@ namespace TicTacToeOnline.Domain.RoomAggregate
         public void AddTeamId(TeamId teamId)
         {
             _teamIds.Add(teamId);
+            RaiseDomainEvent(new TeamIdsAddedToRoomDomainEvent(Guid.NewGuid(),
+                Id, new List<TeamId>(){teamId}));
+        }
+
+        public void AddRangeTeamId(IEnumerable<TeamId> teamIds)
+        {
+            _teamIds.AddRange(teamIds);
+            RaiseDomainEvent(new TeamIdsAddedToRoomDomainEvent(Guid.NewGuid(), Id, teamIds));
         }
 
         public Error? AddPlayer(PlayerId playerId)
