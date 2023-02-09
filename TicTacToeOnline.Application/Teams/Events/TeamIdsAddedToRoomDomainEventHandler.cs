@@ -1,24 +1,23 @@
 ﻿using MediatR;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
+using TicTacToeOnline.Domain.Common.Enums;
 using TicTacToeOnline.Domain.DomainEvents;
 using TicTacToeOnline.Domain.TeamAggregate;
 
 namespace TicTacToeOnline.Application.Teams.Events
 {
-    public class RoomCreatedDomainEventHandler : INotificationHandler<RoomCreatedDomainEvent>
+    public class TeamIdsAddedToRoomDomainEventHandler : INotificationHandler<TeamIdsAddedToRoomDomainEvent>
     {
         private readonly IRoomRepository _roomRepository;
         private readonly ITeamRepository _teamRepository;
-        private readonly ISender _mediator;
 
-        public RoomCreatedDomainEventHandler(IRoomRepository roomRepository, ITeamRepository teamRepository, ISender mediator)
+        public TeamIdsAddedToRoomDomainEventHandler(IRoomRepository roomRepository, ITeamRepository teamRepository)
         {
             _roomRepository = roomRepository;
             _teamRepository = teamRepository;
-            _mediator = mediator;
         }
 
-        public async Task Handle(RoomCreatedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(TeamIdsAddedToRoomDomainEvent notification, CancellationToken cancellationToken)
         {
             var room = await _roomRepository.GetByIdAsync(notification.RoomId.Value, cancellationToken);
 
@@ -27,16 +26,12 @@ namespace TicTacToeOnline.Application.Teams.Events
                 return;
             }
 
-            for (var i = 0; i < room.GameSetting.TeamCount; i++)
+            foreach (var teamId in notification.TeamIds)
             {
-                var team = Team.Create();
-
-                room.AddTeamId(team.Id);
+                var team = Team.Create(Mark.Empty, teamId); // TODO ставить разные Mark возможно с помощью умного enum
 
                 await _teamRepository.AddAsync(team, cancellationToken);
             }
-
-            await _roomRepository.UpdateAsync(room, cancellationToken);
 
             await _teamRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
