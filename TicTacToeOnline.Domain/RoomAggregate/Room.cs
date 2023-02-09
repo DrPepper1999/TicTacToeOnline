@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using TicTacToeOnline.Domain.Common.Enums;
 using TicTacToeOnline.Domain.Common.Errors;
 using TicTacToeOnline.Domain.Common.Models;
 using TicTacToeOnline.Domain.Common.ValueObjects;
@@ -48,11 +49,14 @@ namespace TicTacToeOnline.Domain.RoomAggregate
                 gameSetting,
                 teamIds);
 
+            if (gameSetting.TeamCount > Enum.GetNames<Mark>().Length - 1)
+            {
+                // error
+            }
+
             room.AddPlayer(playerId);
 
             room.AddRangeTeamId(teamIds);
-
-            room.RaiseDomainEvent(new RoomCreatedDomainEvent(Guid.NewGuid(), room.Id));
 
             return room;
         }
@@ -88,7 +92,7 @@ namespace TicTacToeOnline.Domain.RoomAggregate
             return null;
         }
 
-#pragma warning disable CS8618
+        #pragma warning disable CS8618
         private Room()
         {
         }
