@@ -13,7 +13,7 @@ namespace TicTacToeOnline.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<(CreateRoomRequest request, Guid playerId), CreateRoomCommand>()
+            config.NewConfig<(CreateRoomRequest request, string playerId), CreateRoomCommand>()
                 .Map(dest => dest.PlayerId,
                     src => src.playerId)
                 .Map(dest => dest, src => src.request);
@@ -35,6 +35,7 @@ namespace TicTacToeOnline.Api.Common.Mapping
                 .Map(dest => dest.Status, src => src.Status.ToString())
                 .Map(dest => dest.MapSize, src => src.GameSetting.MapSize)
                 .Map(dest => dest.MaxPlayers, src => src.GameSetting.MaxPlayers)
+                .Map(dest => dest.TeamCount, src => src.GameSetting.TeamCount)
                 .Map(dest => dest.TeamIds,
                 src => src.TeamIds.Select(x => x.Value))
                 .Map(dest => dest.PlayerIds,
