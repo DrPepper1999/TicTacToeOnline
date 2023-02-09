@@ -15,6 +15,7 @@ namespace TicTacToeOnline.Application.Players.Events
 
         public async Task Handle(PlayerConnectionAppendDomainEvent notification, CancellationToken cancellationToken)
         {
+
             await _playerRepository.UpdateAsync(notification.Player, cancellationToken);
         }
     }
