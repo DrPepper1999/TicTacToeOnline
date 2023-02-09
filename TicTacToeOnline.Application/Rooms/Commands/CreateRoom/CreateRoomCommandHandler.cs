@@ -29,7 +29,7 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
 
             var room = Room.Create(
                 request.Name,
-                PlayerId.Create(request.PlayerId.ToString()), 
+                PlayerId.Create(request.PlayerId), 
                 GameSetting.Create(request.MapSize, request.MaxPlayers, request.TeamCount),
                 teamIds,
                 request.Password);
