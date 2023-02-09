@@ -1,5 +1,4 @@
-﻿using ErrorOr;
-using MediatR;
+﻿using MediatR;
 using TicTacToeOnline.Application.Common.Interfaces.Persistence;
 using TicTacToeOnline.Domain.TeamAggregate;
 
