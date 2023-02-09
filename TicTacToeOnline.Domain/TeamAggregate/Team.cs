@@ -16,21 +16,26 @@ namespace TicTacToeOnline.Domain.TeamAggregate
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdateDateTime { get; private set; }
 
-        private Team(TeamId id)
+        private Team(TeamId id, Mark mark)
             : base(id)
         {
-            Mark = Mark.Empty;
+            Mark = mark;
             Score = 0;
         }
 
-        public static Team Create()
+        public static Team Create(Mark mark, TeamId? teamId = null)
         {
-            return new Team(TeamId.CreateUnique());
+            if (mark == Mark.Empty)
+            {
+                // error
+            }
+
+            return new Team(teamId ?? TeamId.CreateUnique(), mark);
         }
 
         public void AddPlayer(PlayerId playerId)
         {
-            //_playerIds.Add(playerId);
+            _playerIds.Add(playerId);
         }
 
 #pragma warning disable CS8618
