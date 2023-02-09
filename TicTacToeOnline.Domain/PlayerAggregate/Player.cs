@@ -45,16 +45,9 @@ namespace TicTacToeOnline.Domain.PlayerAggregate
 
         public void AppendConnection(string connectionId)
         {
-            if (string.IsNullOrEmpty(connectionId))
-            {
-                throw new ArgumentException(nameof(connectionId));
-            }
+            var connectionInfo = ConnectionInfo.Create(connectionId);
 
-            var connection = ConnectionInfo.Create(connectionId);
-
-            _connections.Add(connection);
-
-            RaiseDomainEvent(new PlayerConnectionAppendDomainEvent(Guid.NewGuid(), this));
+            _connections.Add(connectionInfo);
         }
 
         /// <summary>
