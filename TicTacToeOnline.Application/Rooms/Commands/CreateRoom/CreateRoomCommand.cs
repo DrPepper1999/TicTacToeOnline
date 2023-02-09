@@ -1,6 +1,5 @@
 ﻿using ErrorOr;
 using MediatR;
-using TicTacToeOnline.Domain.PlayerAggregate.ValueObjects;
 using TicTacToeOnline.Domain.RoomAggregate;
 
 namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
@@ -11,5 +10,5 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
         int MaxPlayers,
         int MapSize,
         int TeamCount,
-        Guid PlayerId) : IRequest<ErrorOr<Room>>;
+        string PlayerId) : IRequest<ErrorOr<Room>>;
 }
