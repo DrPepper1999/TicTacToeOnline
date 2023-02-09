@@ -39,8 +39,6 @@ namespace TicTacToeOnline.Infrastructure.Persistence.Configurations
                 .HasMaxLength(16);
 
             builder.OwnsOne(r => r.GameSetting);
-
-
         }
 
         private void ConfigureRoomTeamIdsTable(EntityTypeBuilder<Room> builder)
