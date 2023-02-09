@@ -16,7 +16,8 @@ namespace TicTacToeOnline.Api.Common.Mapping
             config.NewConfig<Player, PlayerResponse>()
                 .Map(dest => dest.Id, src => src.Id.Value)
                 .Map(dest => dest.UserId, src => ConvertUserId(src.UserId))
-                .Map(dest => dest.AverageRating, src => src.AverageRating.Value);
+                .Map(dest => dest.AverageRating, src => src.AverageRating.Value)
+                .Map(dest => dest.Uri, src => src.ProfileImage!.AbsoluteUri);
 
 
             config.NewConfig<ConnectionInfo, ConnectionInfoResponse>();
