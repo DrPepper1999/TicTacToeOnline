@@ -60,7 +60,7 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                 name: "Players",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     AverageRatingValue = table.Column<double>(name: "AverageRating_Value", type: "double precision", nullable: false),
                     AverageRatingNumRatings = table.Column<int>(name: "AverageRating_NumRatings", type: "integer", nullable: false),
@@ -81,7 +81,10 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
-                    Status = table.Column<string>(type: "text", nullable: false)
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    GameSettingMapSize = table.Column<int>(name: "GameSetting_MapSize", type: "integer", nullable: false),
+                    GameSettingMaxPlayers = table.Column<int>(name: "GameSetting_MaxPlayers", type: "integer", nullable: false),
+                    GameSettingTeamCount = table.Column<int>(name: "GameSetting_TeamCount", type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,7 +176,7 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ConnectedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ConnectionId = table.Column<string>(type: "text", nullable: false),
-                    PlayerId = table.Column<Guid>(type: "uuid", nullable: false)
+                    PlayerId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,7 +195,7 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PlayerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PlayerId = table.Column<string>(type: "text", nullable: false),
                     RoomId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -232,7 +235,7 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PlayerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    PlayerId = table.Column<string>(type: "text", nullable: false),
                     TeamId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

@@ -12,7 +12,7 @@ using TicTacToeOnline.Infrastructure.Persistence;
 namespace TicTacToeOnline.Infrastructure.Migrations
 {
     [DbContext(typeof(TicTacToeOnlineDbContext))]
-    [Migration("20230208132955_InitialCreate")]
+    [Migration("20230209122323_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,8 +53,8 @@ namespace TicTacToeOnline.Infrastructure.Migrations
 
             modelBuilder.Entity("TicTacToeOnline.Domain.PlayerAggregate.Player", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("timestamp with time zone");
@@ -277,8 +277,8 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                 {
                     b.OwnsOne("TicTacToeOnline.Domain.Common.ValueObjects.AverageRating", "AverageRating", b1 =>
                         {
-                            b1.Property<Guid>("PlayerId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("PlayerId")
+                                .HasColumnType("text");
 
                             b1.Property<int>("NumRatings")
                                 .HasColumnType("integer");
@@ -309,8 +309,9 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("text");
 
-                            b1.Property<Guid>("PlayerId")
-                                .HasColumnType("uuid");
+                            b1.Property<string>("PlayerId")
+                                .IsRequired()
+                                .HasColumnType("text");
 
                             b1.HasKey("Id");
 
@@ -335,6 +336,15 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uuid");
 
+                            b1.Property<int>("MapSize")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("MaxPlayers")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("TeamCount")
+                                .HasColumnType("integer");
+
                             b1.HasKey("RoomId");
 
                             b1.ToTable("Rooms");
@@ -354,8 +364,9 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uuid")
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
                                 .HasColumnName("PlayerId");
 
                             b1.HasKey("Id");
@@ -414,8 +425,9 @@ namespace TicTacToeOnline.Infrastructure.Migrations
                             b1.Property<Guid>("TeamId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uuid")
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
                                 .HasColumnName("PlayerId");
 
                             b1.HasKey("Id");
