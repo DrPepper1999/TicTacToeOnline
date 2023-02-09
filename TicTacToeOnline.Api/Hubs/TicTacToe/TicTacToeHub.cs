@@ -9,6 +9,7 @@ using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 using TicTacToeOnline.Contracts.Room;
 using static TicTacToeOnline.Domain.Common.Errors.Errors.Authentication;
 using TicTacToeOnline.Application.Games.Commands.MakeMove;
+using TicTacToeOnline.Application.Players.Commands.AppendConnection;
 using TicTacToeOnline.Domain.Common.ValueObjects;
 
 namespace TicTacToeOnline.Api.Hubs.TicTacToe
@@ -44,6 +45,7 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
             }
             var userId = GetUserId(userIdentity);
 
+            // TODO убрать Player так как через UserId можно узнать id player
             var getPlayerQuery = new GetPlayerQuery(x =>
                 x.UserId! == userId);
 
@@ -56,6 +58,8 @@ namespace TicTacToeOnline.Api.Hubs.TicTacToe
                 return;
             }
             playerResult.Value.AppendConnection(Context.ConnectionId);
+            // TODO проверить что просле добавления нет ошибки
+            await _mediator.Send(new AppendConnectionCommand(playerResult.Value.Id.Value, Context.ConnectionId));
             await Clients.Caller.setPlayer(_mapper.Map<PlayerResponse>(playerResult.Value));
 
             var createRoomCommand = _mapper
