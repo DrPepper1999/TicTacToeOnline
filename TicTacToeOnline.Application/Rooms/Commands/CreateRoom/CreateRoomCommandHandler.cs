@@ -36,7 +36,7 @@ namespace TicTacToeOnline.Application.Rooms.Commands.CreateRoom
 
             await _roomRepository.AddAsync(room, cancellationToken);
 
-            await _roomRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _roomRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
             return room;
         }
