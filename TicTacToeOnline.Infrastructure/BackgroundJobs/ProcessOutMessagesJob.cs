@@ -16,6 +16,7 @@ namespace TicTacToeOnline.Infrastructure.BackgroundJobs
         private static readonly JsonSerializerSettings JsonSerializerSettings = new()
         {
             TypeNameHandling = TypeNameHandling.All,
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
 
         private readonly TicTacToeOnlineDbContext _dbContext;

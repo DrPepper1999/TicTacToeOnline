@@ -46,7 +46,7 @@ namespace TicTacToeOnline.Infrastructure
             {
                 var interceptor = sp.GetService<ConvertDomainEventsToOutboxMessagesInterceptor>();
                 option
-                    .UseNpgsql("Host=localhost;Port=5432;Database=TicTacToeOnlineDb;Username=postgres;Password=Lfybbk1999")
+                    .UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
                     .AddInterceptors(interceptor!);
             });
 
