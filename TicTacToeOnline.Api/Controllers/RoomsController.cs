@@ -6,8 +6,6 @@ using TicTacToeOnline.Application.Rooms.Commands.CreateRoom;
 using TicTacToeOnline.Application.Rooms.Commands.DeleteRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetRoom;
 using TicTacToeOnline.Application.Rooms.Queries.GetTeams;
-using TicTacToeOnline.Application.Teams.Queries.GetRangeTeamList;
-using TicTacToeOnline.Application.Teams.Queries.GetTeamList;
 using TicTacToeOnline.Contracts.Room;
 using TicTacToeOnline.Contracts.Team;
 
