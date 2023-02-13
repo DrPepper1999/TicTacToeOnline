@@ -20,7 +20,7 @@ namespace TicTacToeOnline.Application.Teams.Events
             var mark = (Mark)1;
             foreach (var teamId in notification.TeamIds)
             {
-                var team = Team.Create(mark, teamId); // TODO ставить разные Mark возможно с помощью умного enum
+                var team = Team.Create(mark, teamId);
 
                 await _teamRepository.AddAsync(team, cancellationToken);
 
