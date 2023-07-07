@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using ErrorOr;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

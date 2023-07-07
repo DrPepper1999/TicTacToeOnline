@@ -1,8 +1,6 @@
 ﻿using ErrorOr;
 using FluentValidation;
 using MediatR;
-using TicTacToeOnline.Application.Authentication.Commands.Register;
-using TicTacToeOnline.Application.Authentication.Common;
 
 namespace TicTacToeOnline.Application.Common.Behaviors
 {

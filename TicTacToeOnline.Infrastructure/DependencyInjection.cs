@@ -35,8 +35,8 @@ namespace TicTacToeOnline.Infrastructure
             return services;
         }
 
-        public static IServiceCollection AddPersistence(this IServiceCollection services,
-            ConfigurationManager configuration)
+        public static IServiceCollection AddPersistence(this IServiceCollection services, 
+            ConfigurationManager configuration) // TODO private static мб
         {
             services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 

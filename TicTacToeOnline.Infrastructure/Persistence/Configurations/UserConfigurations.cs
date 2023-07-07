@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TicTacToeOnline.Domain.RoomAggregate.ValueObjects;
 using TicTacToeOnline.Domain.UserAggregate;
 using TicTacToeOnline.Domain.UserAggregate.ValueObjects;
 

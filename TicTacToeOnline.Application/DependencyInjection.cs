@@ -1,10 +1,7 @@
 ﻿using System.Reflection;
-using ErrorOr;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TicTacToeOnline.Application.Authentication.Commands.Register;
-using TicTacToeOnline.Application.Authentication.Common;
 using TicTacToeOnline.Application.Common.Behaviors;
 
 namespace TicTacToeOnline.Application
